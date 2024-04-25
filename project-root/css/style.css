@@ -26,3 +26,11 @@ button:hover {
 p {
     font-size: 18px;
 }
+
+.version {
+    position: absolute; 
+    bottom: 10px;      /* Abstand vom unteren Rand */
+    right: 10px;       /* Abstand vom rechten Rand */
+    font-size: 14px;   
+    color: #333;       
+}
