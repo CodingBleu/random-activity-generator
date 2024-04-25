@@ -16,4 +16,5 @@ document.getElementById('generate-btn').addEventListener('click', function() {
     const randomActivity = activities[randomIndex];
 
     document.getElementById('activity-display').textContent = randomActivity;
+    console.log("Arsch");
 });
