@@ -16,43 +16,52 @@ const db = new sqlite3.Database(dbName, (err) => {
 
 // Startet die Ausführung der Datenbankoperationen
 db.serialize(() => {
-     // Führt SQL aus, um eine Tabelle zu erstellen, wenn sie nicht existiert
-    db.run(`
-        CREATE TABLE IF NOT EXISTS activities (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            description TEXT NOT NULL
-        )
-    `, (err) => {
+     // Löscht die bestehende Tabelle 'activities', wenn sie existiert
+    db.run("DROP TABLE IF EXISTS activities", (err) => {
         if (err) {
-            // Gibt eine Fehlermeldung aus, falls beim Erstellen der Tabelle ein Fehler auftritt
-            console.error("Error creating table:", err.message);
+            // Gibt eine Fehlermeldung aus, falls beim Löschen der Tabelle ein Fehler auftritt
+            console.error("Error dropping table:", err.message);
             return;
         }
-        // Erfolgreiche Erstellung der Tabelle wird bestätigt
-        console.log('Table created');
-        
-         // Liste der Aktivitäten, die in die Datenbank eingefügt werden sollen
-        const activities = [
-            'Machen Sie einen Spaziergang im Park',
-            'Ein Buch lesen',
-            'Kochen Sie ein neues Rezept',
-            'Sehen Sie sich einen Dokumentarfilm an',
-            'Ein Brettspiel spielen',
-            'Machen Sie etwas Gartenarbeit',
-            'Probieren Sie ein neues Hobby aus',
-            'Ein Museum besuchen',
-            'Eine Fahrradtour machen',
-            'Schreiben Sie eine Kurzgeschichte'
-        ];
+        // Bestätigt, dass die Tabelle erfolgreich gelöscht wurde
+        console.log('Table dropped');
 
-        // Füge jede Aktivität in die Datenbank ein
-        activities.forEach(activity => {
-            db.run(`INSERT INTO activities (description) VALUES (?)`, [activity], err => {
-                if (err) {
-                    // Gibt eine Fehlermeldung aus, falls beim Einfügen der Daten ein Fehler auftritt
-                    console.error("Error inserting data:", err.message);
-                }
+        // Erstelle eine neue Tabelle 'activites'
+        db.run(`CREATE TABLE activities (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            description TEXT NOT NULL
+        )`, (err) => {
+            if (err) {
+                // Gibt einen Fehler aus, falls beim Erstellen der Tabelle ein Problem aufgetreten ist
+                console.error("Error creating table:", err.message);
+                return;
+            }
+            // Bestätigen, dass die Tabelle erfolgreich erstellt wurde
+            console.log('Table created');
+
+            // Liste der Aktivitäten, die in die Datenbank eingefügt werden sollen
+            const activities = [
+                'Machen Sie einen Spaziergang im Park',
+                'Ein Buch lesen',
+                'Kochen Sie ein neues Rezept',
+                'Sehen Sie sich einen Dokumentarfilm an',
+                'Ein Brettspiel spielen',
+                'Machen Sie etwas Gartenarbeit',
+                'Probieren Sie ein neues Hobby aus',
+                'Ein Museum besuchen',
+                'Eine Fahrradtour machen',
+                'Schreiben Sie eine Kurzgeschichte'
+            ];
+
+            // Füge jede Aktivität in die Datenbanktabelle ein
+            activities.forEach(activity => {
+                db.run(`INSERT INTO activities (description) VALUES (?)`, [activity], err => {
+                    if (err) {
+                        // Gibt eine Fehlermeldung aus, falls beim Einfügen der Daten ein Fehler auftritt
+                        console.error("Error inserting data:", err.message);
+                    }
+                });
             });
-        });
+        })
     });
 });
