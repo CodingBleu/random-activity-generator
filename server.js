@@ -43,7 +43,7 @@ app.get('/random-activity', (req, res) => {
   });
 });
 
-// Inhalte wedern mit Versionsinformation zu versehen durch GET
+// Inhalte werden mit Versionsinformation versehen durch GET
 app.get('/versioned-content', (req, res) => {
   try {
     const contentPath = req.query.path; // Pfad der angeforderten Datei
