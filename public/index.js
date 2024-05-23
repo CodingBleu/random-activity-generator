@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     generateButton.addEventListener('click', function() {
         const participants = participantsInput.value; //Teilnehmeranzahl erfassen
         // Während auf die neue Aktivität gewartet wird, wird "Loading..." angezeigt
-        activityDisplay.textContent = "Loading...";
 
         //Anfrage an den Server senden, um eine zufällige Aktivität mit Teilnehmeranzahl zu holen
         fetch(`/random-activity?participants=${participants}`)

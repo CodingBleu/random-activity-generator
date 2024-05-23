@@ -42,16 +42,50 @@ db.serialize(() => {
 
             // Liste der Aktivitäten mit Teilnehmeranzahl, die in die Datenbank eingefügt werden sollen
             const activities = [
-                {description: 'Machen Sie einen Spaziergang im Park', participants: 2},
-                {description: 'Ein Buch lesen', participants: 1},
-                {description: 'Kochen Sie ein neues Rezept', participants: 2},
-                {description: 'Sehen Sie sich einen Dokumentarfilm an', participants: 1},
-                {description: 'Ein Brettspiel spielen', participants: 4},
-                {description: 'Machen Sie etwas Gartenarbeit', participants: 1},
-                {description: 'Probieren Sie ein neues Hobby aus', participants: 1},
-                {description: 'Ein Museum besuchen', participants: 2},
-                {description: 'Eine Fahrradtour machen', participants: 1},
-                {description: 'Schreiben Sie eine Kurzgeschichte', participants: 1},
+                ...Array.from({length: 4}, (_, i) => ({
+                    description: 'Tennis spielen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Ein Spaziergang im Park',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 1}, (_, i) => ({
+                    description: 'Ein Buch lesen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Ein neues Rezept kochen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Einen Dokumentarfilm ansehen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 8}, (_, i) => ({
+                    description: 'Ein Brettspiel spielen',
+                    participants: i + 2
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Gartenarbeit machen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 12}, (_, i) => ({
+                    description: 'Volleyball spielen',
+                    participants: i + 2
+                })),
+                ...Array.from({length: 20}, (_, i) => ({
+                    description: 'Ein Museum besuchen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 5}, (_, i) => ({
+                    description: 'Eine Fahrradtour veranstalten',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 1}, (_, i) => ({
+                    description: 'Schreibe eine Kurzgeschichte',
+                    participants: i + 1
+                })),
             ];
 
             // Füge jede Aktivität mit Teilnehmeranzahl in die Datenbanktabelle ein
