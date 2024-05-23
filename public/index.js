@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         activityDisplay.textContent = "Loading...";
 
         //Anfrage an den Server senden, um eine zufällige Aktivität mit Teilnehmeranzahl zu holen
-        fetch('/random-activity?participants=${participants}')
+        fetch(`/random-activity?participants=${participants}`)
             .then(response => response.text()) // Antwort in Text konvertieren 
             .then(activity => {
                 // Wenn eine Aktivität zurückgegeben wird, wird diese angezeigt

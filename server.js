@@ -28,9 +28,9 @@ app.use(express.static('public'));
 
 // Eine zufällige Aktivität aus der Datenbank basierend auf der Teilnehmeranzahl wird abgerufen durch get
 app.get('/random-activity', (req, res) => {
-  const participants = req.query.participants || 1; //Teilnehmeranzahl aus der Anfrage abrufen
+  const participants = parseInt(req.query.participants) || 1; //Teilnehmeranzahl aus der Anfrage abrufen
 
-  db.get("SELECT description FROM activities WHERE participants <= ? ORDER BY RANDOM() LIMIT 1", [participants], (err, row) => {
+  db.get("SELECT description FROM activities WHERE participants = ? ORDER BY RANDOM() LIMIT 1", [participants], (err, row) => {
       if (err) {
          // Ein Datenbankfehler wird ausgegeben und sendet einen 500 Statuscode
         console.error("Database error: ", err.message);
