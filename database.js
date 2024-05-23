@@ -26,10 +26,11 @@ db.serialize(() => {
         // Bestätigt, dass die Tabelle erfolgreich gelöscht wurde
         console.log('Table dropped');
 
-        // Erstelle eine neue Tabelle 'activites'
+        // Tabelle 'activities' mit einem zusätzlichen Feld für Teilnehmeranzahl erstellen
         db.run(`CREATE TABLE activities (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            description TEXT NOT NULL
+            description TEXT NOT NULL,
+            participants INTEGER NOT NULL
         )`, (err) => {
             if (err) {
                 // Gibt einen Fehler aus, falls beim Erstellen der Tabelle ein Problem aufgetreten ist
@@ -39,23 +40,57 @@ db.serialize(() => {
             // Bestätigen, dass die Tabelle erfolgreich erstellt wurde
             console.log('Table created');
 
-            // Liste der Aktivitäten, die in die Datenbank eingefügt werden sollen
+            // Liste der Aktivitäten mit Teilnehmeranzahl, die in die Datenbank eingefügt werden sollen
             const activities = [
-                'Machen Sie einen Spaziergang im Park',
-                'Ein Buch lesen',
-                'Kochen Sie ein neues Rezept',
-                'Sehen Sie sich einen Dokumentarfilm an',
-                'Ein Brettspiel spielen',
-                'Machen Sie etwas Gartenarbeit',
-                'Probieren Sie ein neues Hobby aus',
-                'Ein Museum besuchen',
-                'Eine Fahrradtour machen',
-                'Schreiben Sie eine Kurzgeschichte'
+                ...Array.from({length: 4}, (_, i) => ({
+                    description: 'Tennis spielen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Ein Spaziergang im Park',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 1}, (_, i) => ({
+                    description: 'Ein Buch lesen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Ein neues Rezept kochen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Einen Dokumentarfilm ansehen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 8}, (_, i) => ({
+                    description: 'Ein Brettspiel spielen',
+                    participants: i + 2
+                })),
+                ...Array.from({length: 2}, (_, i) => ({
+                    description: 'Gartenarbeit machen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 12}, (_, i) => ({
+                    description: 'Volleyball spielen',
+                    participants: i + 2
+                })),
+                ...Array.from({length: 20}, (_, i) => ({
+                    description: 'Ein Museum besuchen',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 5}, (_, i) => ({
+                    description: 'Eine Fahrradtour veranstalten',
+                    participants: i + 1
+                })),
+                ...Array.from({length: 1}, (_, i) => ({
+                    description: 'Schreibe eine Kurzgeschichte',
+                    participants: i + 1
+                })),
             ];
 
-            // Füge jede Aktivität in die Datenbanktabelle ein
+            // Füge jede Aktivität mit Teilnehmeranzahl in die Datenbanktabelle ein
             activities.forEach(activity => {
-                db.run(`INSERT INTO activities (description) VALUES (?)`, [activity], err => {
+                db.run(`INSERT INTO activities (description, participants) VALUES (?, ?)`, [activity.description, activity.participants], err => {
                     if (err) {
                         // Gibt eine Fehlermeldung aus, falls beim Einfügen der Daten ein Fehler auftritt
                         console.error("Error inserting data:", err.message);
