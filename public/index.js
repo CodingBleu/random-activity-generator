@@ -4,14 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const activityDisplay = document.getElementById('activity-display');
     // das HTML-Element für den Button holen, der eine neue Aktivität generiert
     const generateButton = document.getElementById('generate-btn');
+    // das HTML-Element für die Teilnehmeranzahl holen
+    const participantsInput = document.getElementById('participants');
 
     // Funktion wird ausgeführt, wenn der Button geklickt wird
     generateButton.addEventListener('click', function() {
+        const participants = participantsInput.value; //Teilnehmeranzahl erfassen
         // Während auf die neue Aktivität gewartet wird, wird "Loading..." angezeigt
         activityDisplay.textContent = "Loading...";
 
-        //Anfrage an den Server senden, um eine zufällige Aktivität zu holen
-        fetch('/random-activity')
+        //Anfrage an den Server senden, um eine zufällige Aktivität mit Teilnehmeranzahl zu holen
+        fetch('/random-activity?participants=${participants}')
             .then(response => response.text()) // Antwort in Text konvertieren 
             .then(activity => {
                 // Wenn eine Aktivität zurückgegeben wird, wird diese angezeigt

@@ -26,9 +26,11 @@ const cache = {};
 // Konfiguration des Servers, um statische Dateien aus dem "public"-Verzeichnis zu bedienen
 app.use(express.static('public'));
 
-// Eine zufällige Aktivität aus der Datenbank wird abgerufen durch GET
+// Eine zufällige Aktivität aus der Datenbank basierend auf der Teilnehmeranzahl wird abgerufen durch get
 app.get('/random-activity', (req, res) => {
-  db.get("SELECT description FROM activities ORDER BY RANDOM() LIMIT 1", (err, row) => {
+  const participants = req.query.participants || 1; //Teilnehmeranzahl aus der Anfrage abrufen
+
+  db.get("SELECT description FROM activities WHERE participants <= ? ORDER BY RANDOM() LIMIT 1", [participants], (err, row) => {
       if (err) {
          // Ein Datenbankfehler wird ausgegeben und sendet einen 500 Statuscode
         console.error("Database error: ", err.message);
