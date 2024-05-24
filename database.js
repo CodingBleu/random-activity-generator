@@ -14,6 +14,12 @@ const db = new sqlite3.Database(dbName, (err) => {
     console.log(`Connected to the ${dbName} database.`);
 });
 
+// Funktion für die zufällige Auswahl einer Kategorie
+function getRandomCategory(){
+    const categories = ['Sport', 'Kultur', 'Bildung', 'Information', 'Kulinarik', 'Hausarbeit']
+    return categories[Math.floor(Math.random() * categories.length)];
+}
+
 // Startet die Ausführung der Datenbankoperationen
 db.serialize(() => {
      // Löscht die bestehende Tabelle 'activities', wenn sie existiert
@@ -99,6 +105,13 @@ db.serialize(() => {
                     category: 'Education'
                 })),
             ];
+
+            for (const activity of activities) {
+                //Falls keine Kategorie angegeben ist, wähle eine zufällige Kategorie 
+                if (!activity.category) {
+                    activity.category = getRandomCategory();
+                }
+            }
 
             // Füge jede Aktivität mit Teilnehmeranzahl in die Datenbanktabelle ein
             activities.forEach(activity => {
