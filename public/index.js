@@ -6,14 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const generateButton = document.getElementById('generate-btn');
     // das HTML-Element für die Teilnehmeranzahl holen
     const participantsInput = document.getElementById('participants');
+    // das HTML-Element für die Kategorie holen
+    const categorySelect = document.getElementById('category');
 
     // Funktion wird ausgeführt, wenn der Button geklickt wird
     generateButton.addEventListener('click', function() {
         const participants = participantsInput.value; //Teilnehmeranzahl erfassen
-        // Während auf die neue Aktivität gewartet wird, wird "Loading..." angezeigt
+        const category = categorySelect.value; //Kategorie erfassen
 
-        //Anfrage an den Server senden, um eine zufällige Aktivität mit Teilnehmeranzahl zu holen
-        fetch(`/random-activity?participants=${participants}`)
+        //Anfrage an den Server senden, um eine zufällige Aktivität mit ensprechenden Parametern zu holen
+        fetch(`/random-activity?participants=${participants}&category=${category}`)
             .then(response => response.text()) // Antwort in Text konvertieren 
             .then(activity => {
                 // Wenn eine Aktivität zurückgegeben wird, wird diese angezeigt

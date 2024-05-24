@@ -29,8 +29,9 @@ app.use(express.static('public'));
 // Eine zufällige Aktivität aus der Datenbank basierend auf der Teilnehmeranzahl wird abgerufen durch get
 app.get('/random-activity', (req, res) => {
   const participants = parseInt(req.query.participants) || 1; //Teilnehmeranzahl aus der Anfrage abrufen
+  const category = req.query.category;
 
-  db.get("SELECT description FROM activities WHERE participants = ? ORDER BY RANDOM() LIMIT 1", [participants], (err, row) => {
+  db.get("SELECT description FROM activities WHERE participants = ? AND category = ? ORDER BY RANDOM() LIMIT 1", [participants, category], (err, row) => {
       if (err) {
          // Ein Datenbankfehler wird ausgegeben und sendet einen 500 Statuscode
         console.error("Database error: ", err.message);
@@ -40,7 +41,7 @@ app.get('/random-activity', (req, res) => {
           res.send(row.description);
       } else {
         // Ein 404 Statuscode wird ausgegeben, wenn keine Aktivität gefunden wurde
-          res.status(404).send("No activities found");
+          res.status(404).send("Keine Aktivitäten gefunden");
       }
   });
 });
