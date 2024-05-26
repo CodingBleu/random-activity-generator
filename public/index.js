@@ -14,24 +14,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const participants = participantsInput.value; //Teilnehmeranzahl erfassen
         const category = categorySelect.value; //Kategorie erfassen
 
-        //Anfrage an den Server senden, um eine zufällige Aktivität mit ensprechenden Parametern zu holen
-        fetch(`/random-activity?participants=${participants}&category=${category}`)
-            .then(response => response.text()) // Antwort in Text konvertieren 
-            .then(activity => {
-                // Wenn eine Aktivität zurückgegeben wird, wird diese angezeigt
-                if(activity) {
-                    activityDisplay.textContent = activity;
-                } else {
-                    // Wenn keine Aktivität gefunden wird, zeigen wir eine Fehlermeldung an
-                    activityDisplay.textContent = "No activity found. Try again!";
-                }
-            })
-            // Wenn ein Fehler auftritt, wird er in der  Konsole angezeigt 
-            .catch(error => {
-                console.error('Error fetching activity:', error);
-                activityDisplay.textContent = "Failed to load activity. Check console for details.";
-            });
-    });
+         // Anfrage an den Server senden, um eine zufällige Aktivität mit entsprechenden Parametern zu holen
+         fetch(`/random-activity?participants=${participants}&category=${category}`)
+         .then(response => response.json()) // Antwort in JSON konvertieren
+         .then(data => {
+             // Wenn eine Aktivität zurückgegeben wird, wird diese angezeigt
+             if(data.description) {
+                 activityDisplay.textContent = `Aktivität: ${data.description}`;
+                 
+                 // Kategorie im Dropdown auf die zufällige Kategorie setzen, falls 'random' gewählt wurde
+                 if (category === 'random') {
+                     let optionExists = false;
+
+                     // Prüfen, ob die zufällige Kategorie bereits im Dropdown existiert
+                     for (let i = 0; i < categorySelect.options.length; i++) {
+                         if (categorySelect.options[i].value === data.category) {
+                             categorySelect.selectedIndex = i;
+                             optionExists = true;
+                             break;
+                         }
+                     }
+                 }
+             } else {
+                 // Wenn keine Aktivität gefunden wird, zeigen wir eine Fehlermeldung an
+                 activityDisplay.textContent = "Keine Aktivität gefunden. Versuchen Sie es erneut!";
+             }
+         })
+         // Wenn ein Fehler auftritt, wird er in der Konsole angezeigt 
+         .catch(error => {
+             console.error('Error fetching activity:', error);
+             activityDisplay.textContent = "Keine Aktivität gefunden.";
+         });
+ });
 
     // Anfrage an den Server senden, um die Version der CSS-Datei zu holen 
     fetch('/versioned-content?path=/style.css')

@@ -26,43 +26,61 @@ const cache = {};
 // Konfiguration des Servers, um statische Dateien aus dem "public"-Verzeichnis zu bedienen
 app.use(express.static('public'));
 
-// Eine zufällige Aktivität aus der Datenbank basierend auf der Teilnehmeranzahl wird abgerufen durch get
+// Funktion zur Suche nach einer Aktivität basierend auf der Teilnehmeranzahl und Kategorie
+function fetchActivityByCategory(participants, category, res, callback) {
+  db.get("SELECT description FROM activities WHERE participants = ? AND category = ? ORDER BY RANDOM() LIMIT 1", [participants, category], (err, row) => {
+      if (err) {
+          console.error("Database error: ", err.message);
+          return res.status(500).send("Error fetching activity");
+      } 
+
+      if (row) {
+        res.json({ category: category, description: row.description });
+      } else {
+          callback();
+      }
+  });
+}
+
 app.get('/random-activity', (req, res) => {
   const participants = parseInt(req.query.participants) || 1; //Teilnehmeranzahl aus der Anfrage abrufen
   let category = req.query.category;
 
   if (category === 'random') {
-    db.get("SELECT DISTINCT category FROM activities ORDER BY RANDOM() LIMIT 1", (err, row) => {
-      if (err) {
-        console.error("Database error: ", err.message);
-        return res.status(500).send("Error fetching random category");
-      } else if (row) {
-        category = row.category;
-        fetchActivityByCategory(participants, category, res);
-      } else {
-        res.status(404).send("No categories found");
-      }
-    });
+      // Abrufen aller Kategorien
+      db.all("SELECT DISTINCT category FROM activities", (err, rows) => {
+          if (err) {
+              console.error("Database error: ", err.message);
+              return res.status(500).send("Error fetching categories");
+          }
+
+          if (rows.length === 0) {
+              return res.status(404).send("No categories found");
+          }
+
+          // Kategorien mischen und durchgehen
+          const shuffledCategories = rows.sort(() => 0.5 - Math.random());
+          let index = 0;
+
+          const tryNextCategory = () => {
+              if (index < shuffledCategories.length) {
+                  category = shuffledCategories[index].category;
+                  index++;
+                  fetchActivityByCategory(participants, category, res, tryNextCategory); // Versuche die nächste Kategorie
+              } else {
+                  res.status(404).send("Keine Aktivitäten gefunden");
+              }
+          };
+
+          tryNextCategory(); // Suche starten
+      });
   } else {
-    fetchActivityByCategory(participants, category, res);
+      // Aktivität in der angegebenen Kategorie suchen
+      fetchActivityByCategory(participants, category, res, () => {
+          res.status(404).send("Keine Aktivitäten gefunden");
+      });
   }
 });
-
-  function fetchActivityByCategory(participants, category, res) {
-      db.get("SELECT description FROM activities WHERE participants = ? AND category = ? ORDER BY RANDOM() LIMIT 1", [participants, category], (err, row) => {
-        if (err) {
-          // Ein Datenbankfehler wird ausgegeben und sendet einen 500 Statuscode
-          console.error("Database error: ", err.message);
-            res.status(500).send("Error fetching activity");
-        } else if (row) {
-          // Die abgerufene Aktivität wird gesendet, wenn vorhanden
-            res.send(row.description);
-        } else {
-          // Ein 404 Statuscode wird ausgegeben, wenn keine Aktivität gefunden wurde
-            res.status(404).send("Keine Aktivitäten gefunden");
-        }
-    });
-  }
 
 // Inhalte werden mit Versionsinformation versehen durch GET
 app.get('/versioned-content', (req, res) => {

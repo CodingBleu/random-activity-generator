@@ -16,7 +16,7 @@ const db = new sqlite3.Database(dbName, (err) => {
 
 // Funktion für die zufällige Auswahl einer Kategorie
 function getRandomCategory(){
-    const categories = ['Sport', 'Kultur', 'Bildung', 'Information', 'Kulinarik', 'Hausarbeit']
+    const categories = ['Sport', 'Culture', 'Education', 'Information', 'Culinary', 'Housework']
     return categories[Math.floor(Math.random() * categories.length)];
 }
 
@@ -57,7 +57,7 @@ db.serialize(() => {
                 ...Array.from({length: 2}, (_, i) => ({
                     description: 'Ein Spaziergang im Park',
                     participants: i + 1,
-                    category: 'Kultur'
+                    category: 'Culture'
                 })),
                 ...Array.from({length: 1}, (_, i) => ({
                     description: 'Ein Buch lesen',
@@ -92,7 +92,7 @@ db.serialize(() => {
                 ...Array.from({length: 20}, (_, i) => ({
                     description: 'Ein Museum besuchen',
                     participants: i + 1,
-                    category: 'Kultur'
+                    category: 'Culture'
                 })),
                 ...Array.from({length: 5}, (_, i) => ({
                     description: 'Eine Fahrradtour veranstalten',
