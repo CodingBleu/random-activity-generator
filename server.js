@@ -3,6 +3,7 @@ import express from 'express';
 import fs from 'fs';
 import sqlite3 from 'sqlite3';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Erstellung einer neuen Express-App
 const app = express();
@@ -98,6 +99,9 @@ app.get('/versioned-content', (req, res) => {
 // Funktion, die den versionierten Pfad einer Datei basierend auf ihrer letzten Änderung erzeugt
 function versionedContent(contentPath) {
   if (!cache[contentPath]) {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    
     const physicalPath = path.join(__dirname, 'public', contentPath); // Vollständiger Pfad der Datei
     console.log('Trying to access:', physicalPath);
     const fileInfo = fs.statSync(physicalPath); // Hole Dateiinformationen
