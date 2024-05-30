@@ -1,8 +1,8 @@
 // Einbinden der benötigten Module
-const express = require('express');
-const fs = require('fs');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+import express from 'express';
+import fs from 'fs';
+import sqlite3 from 'sqlite3';
+import path from 'path';
 
 // Erstellung einer neuen Express-App
 const app = express();

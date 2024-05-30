@@ -1,5 +1,5 @@
 // sqlite3 Modul impoortieren und verbose-Modus aktivieren, der detailliertere Logs liefert
-const sqlite3 = require('sqlite3').verbose();
+import sqlite3 from 'sqlite3';
 
 // Name der Datenbankdatei definieren
 const dbName = 'activities.db';
@@ -125,3 +125,4 @@ db.serialize(() => {
         })
     });
 });
+export default db;
