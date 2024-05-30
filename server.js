@@ -44,17 +44,21 @@ function fetchActivityByCategory(participants, category, res, callback) {
 }
 
 app.get('/random-activity', (req, res) => {
-  const participants = parseInt(req.query.participants) || 1; //Teilnehmeranzahl aus der Anfrage abrufen
+  // Teilnehmeranzahl wird aus der Anfrage entnommen. Wenn keine Teilnhemeranzahl angegeben ist -> 1
+  const participants = parseInt(req.query.participants) || 1; 
+  // Kategorie wird aus der Anfrage enttnommen
   let category = req.query.category;
 
   if (category === 'random') {
       // Abrufen aller Kategorien
       db.all("SELECT DISTINCT category FROM activities", (err, rows) => {
           if (err) {
+            // Bei einem Datenbankfehler wird eine Fehlermeldung ausgegeben 
               console.error("Database error: ", err.message);
               return res.status(500).send("Error fetching categories");
           }
 
+          // Wenn keine Kategorien gefunden werden
           if (rows.length === 0) {
               return res.status(404).send("No categories found");
           }
@@ -63,12 +67,16 @@ app.get('/random-activity', (req, res) => {
           const shuffledCategories = rows.sort(() => 0.5 - Math.random());
           let index = 0;
 
+          // Funktion, um die nächste Kategorie zu versuchen
           const tryNextCategory = () => {
               if (index < shuffledCategories.length) {
+                // setzt die Kategorie auf die nächste in der gemischten Liste
                   category = shuffledCategories[index].category;
                   index++;
-                  fetchActivityByCategory(participants, category, res, tryNextCategory); // Versuche die nächste Kategorie
+                  //Versucht, eine Aktivität in der aktuellen Kategorie zu finden
+                  fetchActivityByCategory(participants, category, res, tryNextCategory);
               } else {
+                // Wenn keine Aktivitäten gefunden werden, wird eine Fehlermeldung ausgegeben
                   res.status(404).send("Keine Aktivitäten gefunden");
               }
           };
@@ -101,7 +109,7 @@ function versionedContent(contentPath) {
   if (!cache[contentPath]) {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    
+
     const physicalPath = path.join(__dirname, 'public', contentPath); // Vollständiger Pfad der Datei
     console.log('Trying to access:', physicalPath);
     const fileInfo = fs.statSync(physicalPath); // Hole Dateiinformationen
