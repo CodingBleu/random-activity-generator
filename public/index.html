@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Random Activity Generator</title>
     <!--Verknüpfung zu einer CSS-Datei, um das Styling der Seite zu definieren-->
-    <link rel="stylesheet" type="text/css" href="/style.css" id="versionedCss">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/style.css"
+      id="versionedCss"
+    />
+  </head>
+  <body>
     <div class="container">
-        <!-- Hauptüberschrift der Seite -->
-        <h1>Random Activity Generator</h1>
-        <div class="category">
-            <!-- Auswahl der Kategorie durch drop-down Menü-->
-            <label for="category">Kategorie:</label>
-                <select id="category">
-                    <option value="random">Zufällige Kategorie</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Culture">Kultur</option>
-                    <option value="Culinary">Kulinarik</option>
-                    <option value="Education">Bildung</option>
-                    <option value="Information">Information</option>
-                    <option value="Housework">Hausarbeit</option>
-                </select>
-        </div>
-        <br>
-        <div class="participants">
-            <!-- Eingabefeld für Teilnehmer hinzufügen -->
-            <label for="participants">Teilnehmeranzahl:</label>
-            <input type="number" id="participants" min="1"/>
-        </div>
-        <br>
-        <!-- Button zum Generieren einer zufälligen Aktivität -->
-        <button id="generate-btn">Aktivität generieren</button>
-        <!-- Absatz, der die generierte Aktivität anzeigt -->
-        <p id="activity-display">Klicken Sie auf den Button, um eine zufällige Aktivität zu generieren</p>
-         <!-- Absatz, der die Version der Webseite anzeigt -->
-        <p class="version">Version: 0.10</p>
+      <!-- Hauptüberschrift der Seite -->
+      <h1>Random Activity Generator</h1>
+      <div class="category">
+        <!-- Auswahl der Kategorie durch drop-down Menü-->
+        <label for="category">Kategorie:</label>
+        <select id="category">
+          <option value="random">Zufällige Kategorie</option>
+          <option value="Sport">Sport</option>
+          <option value="Culture">Kultur</option>
+          <option value="Culinary">Kulinarik</option>
+          <option value="Education">Bildung</option>
+          <option value="Information">Information</option>
+          <option value="Housework">Hausarbeit</option>
+        </select>
+      </div>
+      <br />
+      <div class="participants">
+        <!-- Eingabefeld für Teilnehmer hinzufügen -->
+        <label for="participants">Teilnehmeranzahl:</label>
+        <input type="number" id="participants" min="1" />
+      </div>
+      <br />
+      <!-- Button zum Generieren einer zufälligen Aktivität -->
+      <button id="generate-btn">Aktivität generieren</button>
+      <!-- Absatz, der die generierte Aktivität anzeigt -->
+      <p id="activity-display">
+        Klicken Sie auf den Button, um eine zufällige Aktivität zu generieren
+      </p>
+      <!-- Absatz, der die Version der Webseite anzeigt -->
+      <p class="version">Version: 0.10.1</p>
     </div>
     <!-- Verknüpfung zur JavaScript-Datei, die die Funktionalität der Seite steuert -->
     <script type="module" src="/index.js"></script>
-</body>
+  </body>
 </html>
