@@ -42,7 +42,7 @@ export function generateActivity() {
         })
         .catch(error => {
             console.error('Error fetching activity:', error);
-            activityDisplay.textContent = "Keine Aktivität gefunden.";
+            activityDisplay.textContent = "Keine Aktivität gefunden. Versuchen Sie es erneut!";;
         });
 }
 

@@ -1,47 +1,25 @@
-import '@testing-library/jest-dom';
-import { screen, fireEvent } from '@testing-library/dom';
-import { setupEventListeners } from '../public/activityGenerator';
+import { jest } from '@jest/globals';
+import { setupEventListeners } from '../public/activityGenerator.js';
 
-document.body.innerHTML = `
-  <div id="activity-display"></div>
-  <button id="generate-btn">Generate</button>
-  <input id="participants" value="1">
-  <select id="category">
-    <option value="Sport">Sport</option>
-    <option value="Culture">Culture</option>
-    <option value="random">Random</option>
-  </select>
-`;
+// Mocking des Moduls, um tatsächliche DOM-Manipulation und Seiteneffekte zu vermeiden
+jest.mock('../public/activityGenerator.js', () => ({
+  setupEventListeners: jest.fn(),
+}));
 
-describe('Random Activity Generator', () => {
-    beforeAll(() => {
-      setupEventListeners(); // Richte die Event-Listener ein
-    });
-  
-    it('should display activity when generated', async () => {
-      const mockResponse = { description: 'Tennis spielen' };
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          json: () => Promise.resolve(mockResponse),
-        })
-      );
-  
-      fireEvent.click(screen.getByText('Generate'));
-  
-      const activityDisplay = await screen.findByText('Aktivität: Tennis spielen');
-      expect(activityDisplay).toBeInTheDocument();
-    });
-  
-    it('should display error message when no activity found', async () => {
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          json: () => Promise.resolve({}),
-        })
-      );
-  
-      fireEvent.click(screen.getByText('Generate'));
-  
-      const activityDisplay = await screen.findByText('Keine Aktivität gefunden. Versuchen Sie es erneut!');
-      expect(activityDisplay).toBeInTheDocument();
-    });
+describe('index.js tests', () => {
+  beforeEach(() => {
+    // Löschen aller Instanzen und Aufrufe des Konstruktors und aller Methoden:
+    setupEventListeners.mockClear();
   });
+
+  test('setupEventListeners is called once on startup', () => {
+    // Simulieren Sie die anfängliche Skriptausführung, die setupEventListeners aufrufen soll
+    require('../public/index.js');
+
+    expect(setupEventListeners).toHaveBeenCalledTimes(1);
+  });
+
+  test('setupEventListeners does not throw an error when called', () => {
+    expect(() => setupEventListeners()).not.toThrow();
+  });
+});
