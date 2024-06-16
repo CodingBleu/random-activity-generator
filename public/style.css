@@ -27,10 +27,18 @@ p {
     font-size: 18px;
 }
 
+.category {
+  margin-bottom: 5px;
+}
+
+.participants {
+    margin-bottom: 5px;
+}
+
 .version {
     position: absolute; 
-    bottom: 10px;      /* Abstand vom unteren Rand */
-    right: 10px;       /* Abstand vom rechten Rand */
+    bottom: 10px;      
+    right: 10px;       
     font-size: 14px;   
     color: #333;       
 }

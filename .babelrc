@@ -1,0 +1,13 @@
+{
+    "presets": [
+      [
+        "@babel/preset-env", // Das preset-env Preset wird verwendet, um den JavaScript-Code basierend auf der Zielumgebung zu transformieren
+        {
+          "targets": {
+            "node": "current" // Legt fest, dass der Code für die aktuelle Node.js-Version transpiliert wird
+          }
+        }
+      ]
+    ],
+    "plugins": ["transform-import-meta"] // Das Plugin transform-import-meta wird verwendet, um die Import-Meta-Syntax zu unterstützen
+  }
