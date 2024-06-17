@@ -1,6 +1,10 @@
-import { screen, fireEvent } from '@testing-library/dom';
-import '@testing-library/jest-dom';
-import { generateActivity, loadVersionedCss, setupEventListeners } from '../public/activityGenerator';
+import { screen, fireEvent } from "@testing-library/dom";
+import "@testing-library/jest-dom";
+import {
+  generateActivity,
+  loadVersionedCss,
+  setupEventListeners,
+} from "../public/activityGenerator";
 
 // HTML-Setup für die Tests: Simuliert die Struktur der Webseite
 document.body.innerHTML = `
@@ -16,36 +20,40 @@ document.body.innerHTML = `
     <option value="Information">Information</option>
     <option value="Housework">Hausarbeit</option>
   </select>
+  <select id="location">
+    <option value="indoor">Indoor</option>
+    <option value="outdoor">Outdoor</option>
+  </select>
   <link rel="stylesheet" type="text/css" href="/style.css" id="versionedCss">
 `;
 
-describe('Random Activity Generator', () => {
+describe("Random Activity Generator", () => {
   beforeAll(() => {
     setupEventListeners(); // Vor allen Tests werden Event-Listener eingerichtet
   });
 
-   // Test: Überprüft, ob eine Aktivität korrekt angezeigt wird, wenn sie generiert wird
-  it('should display activity when generated', async () => {
+  // Test: Überprüft, ob eine Aktivität korrekt angezeigt wird, wenn sie generiert wird
+  it("should display activity when generated", async () => {
     // Mock für die API-Antwort, die eine Aktivität zurückgibt
-    const mockResponse = { description: 'Tennis spielen' };
+    const mockResponse = { description: "Tennis spielen" };
     global.fetch = jest.fn(() =>
       Promise.resolve({
-        json: () => Promise.resolve({mockResponse}),
+        json: () => Promise.resolve({ mockResponse }),
       })
     );
 
-     // Simuliert einen Klick auf den "Aktivität generieren" Button
-    fireEvent.click(screen.getByText('Aktivität generieren'));
+    // Simuliert einen Klick auf den "Aktivität generieren" Button
+    fireEvent.click(screen.getByText("Aktivität generieren"));
 
     // Überprüft, ob die generierte Aktivität im Dokument angezeigt wird
     await (() => {
-      const activityDisplay = screen.findByText('/Aktivität: Tennis spielen/i');
+      const activityDisplay = screen.findByText("/Aktivität: Tennis spielen/i");
       expect(activityDisplay).toBeInTheDocument();
     });
   });
 
-   // Test: Überprüft, ob eine Fehlermeldung angezeigt wird, wenn keine Aktivität gefunden wird
-  it('should display error message when no activity found', async () => {
+  // Test: Überprüft, ob eine Fehlermeldung angezeigt wird, wenn keine Aktivität gefunden wird
+  it("should display error message when no activity found", async () => {
     // Mock für die API-Antwort, die keine Aktivität zurückgibt
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -54,19 +62,21 @@ describe('Random Activity Generator', () => {
     );
 
     // Simuliert einen Klick auf den "Aktivität generieren" Button
-    fireEvent.click(screen.getByText('Aktivität generieren'));
+    fireEvent.click(screen.getByText("Aktivität generieren"));
 
     // Überprüft, ob die Fehlermeldung im Dokument angezeigt wird
     await (() => {
-      const activityDisplay = screen.findByText('/Keine Aktivität gefunden. Versuchen Sie es erneut!/i');
+      const activityDisplay = screen.findByText(
+        "/Keine Aktivität gefunden. Versuchen Sie es erneut!/i"
+      );
       expect(activityDisplay).toBeInTheDocument();
     });
   });
 
   // Test: Überprüft, ob die versionierte CSS-Datei korrekt geladen wird
-  it('should load versioned CSS', async () => {
+  it("should load versioned CSS", async () => {
     // Mock für die API-Antwort, die den Pfad zur versionierten CSS-Datei zurückgibt
-    const mockCssPath = '/style.css?v=20230101000000';
+    const mockCssPath = "/style.css?v=20230101000000";
     global.fetch = jest.fn(() =>
       Promise.resolve({
         text: () => Promise.resolve(mockCssPath),
@@ -78,7 +88,7 @@ describe('Random Activity Generator', () => {
 
     // Überprüft, ob der Link zur CSS-Datei im Dokument enthalten ist und den richtigen Pfad enthält
     await (() => {
-      const link = screen.getByRole('link', { name: /versionedCss/i });
+      const link = screen.getByRole("link", { name: /versionedCss/i });
       expect(link).toBeInTheDocument();
       expect(link.href).toContain(mockCssPath);
     });
