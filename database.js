@@ -27,11 +27,6 @@ function getRandomCategory() {
   return categories[Math.floor(Math.random() * categories.length)];
 }
 
-function getRandomLocation() {
-  const locations = ["indoor", "outdoor"];
-  return locations[Math.floor(Math.random() * locations.length)];
-}
-
 // Startet die Ausführung der Datenbankoperationen
 db.serialize(() => {
   // Löscht die bestehende Tabelle 'activities', wenn sie existiert
@@ -104,7 +99,7 @@ db.serialize(() => {
             description: "Gartenarbeit machen",
             participants: i + 1,
             category: "Housework",
-            location: "indoor",
+            location: "outdoor",
           })),
           ...Array.from({ length: 12 }, (_, i) => ({
             description: "Volleyball spielen",
@@ -128,6 +123,156 @@ db.serialize(() => {
             description: "Schreibe eine Kurzgeschichte",
             participants: i + 1,
             category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Yoga",
+            participants: i + 1,
+            category: "Sport",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Meditation",
+            participants: i + 1,
+            category: "Sport",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Geo-Bingo",
+            participants: i + 2,
+            category: "Culture",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 15 }, (_, i) => ({
+            description: "Kunstgalerie besuchen",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Kinoabend",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Bouldern",
+            participants: i + 1,
+            category: "Sport",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Ins Schwimmbad gehen",
+            participants: i + 1,
+            category: "Sport",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Badetag am See",
+            participants: i + 1,
+            category: "Sport",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 10 }, (_, i) => ({
+            description: "Grillen",
+            participants: i + 2,
+            category: "Culinary",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Jogging",
+            participants: i + 1,
+            category: "Sport",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 3 }, (_, i) => ({
+            description: "Bastelprojekt",
+            participants: i + 1,
+            category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Tanzen",
+            participants: i + 1,
+            category: "Sport",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 12 }, (_, i) => ({
+            description: "Bowling",
+            participants: i + 2,
+            category: "Sport",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Fahrrad reparieren",
+            participants: i + 1,
+            category: "Housework",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Fotobuch erstellen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Musikinstrument üben",
+            participants: i + 1,
+            category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Musikinstrument üben",
+            participants: i + 1,
+            category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Puzzeln",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Kochkurs online",
+            participants: i + 1,
+            category: "Culinary",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 4 }, (_, i) => ({
+            description: "Astronomieabend",
+            participants: i + 1,
+            category: "Information",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Geschürspüler ausräumen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Geschürspüler einräumen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Staubsaugen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Fenster putzen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Müll rausbringen",
+            participants: i + 1,
+            category: "Housework",
             location: "indoor",
           })),
         ];
