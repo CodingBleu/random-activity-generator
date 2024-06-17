@@ -10,7 +10,7 @@ class UserBehavior(TaskSet):
             # Generiere eine zufällige Anzahl von Teilnehmern zwischen 1 und 10
             participants = random.randint(1, 10)
             # Klicke den "generate-btn" Knopf durch das Auslösen der entsprechenden Aktion
-            self.client.get("/random-activity?participants={participants}&category=random", {
+            self.client.get("/random-activity?participants={participants}&category=random&location=indoor", {
                 "button": "generate-btn"
                 # Füge hier andere erforderliche Formulardaten hinzu
             })
