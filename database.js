@@ -275,6 +275,66 @@ db.serialize(() => {
             category: "Housework",
             location: "indoor",
           })),
+          ...Array.from({ length: 3 }, (_, i) => ({
+            description: "Theaterstück besuchen",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Konzert besuchen",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 1 }, (_, i) => ({
+            description: "Buchclub treffen",
+            participants: i + 1,
+            category: "Culture",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Sprachen lernen",
+            participants: i + 1,
+            category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Naturwissenschaftliches Experiment",
+            participants: i + 1,
+            category: "Education",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 3 }, (_, i) => ({
+            description: "Backen",
+            participants: i + 1,
+            category: "Culinary",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 5 }, (_, i) => ({
+            description: "Weinverkostung",
+            participants: i + 1,
+            category: "Culinary",
+            location: "outdoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Nachrichten schauen",
+            participants: i + 1,
+            category: "Information",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Wissenschaftspodcast hören",
+            participants: i + 1,
+            category: "Information",
+            location: "indoor",
+          })),
+          ...Array.from({ length: 2 }, (_, i) => ({
+            description: "Wäsche waschen",
+            participants: i + 1,
+            category: "Housework",
+            location: "indoor",
+          })),
         ];
 
         for (const activity of activities) {
