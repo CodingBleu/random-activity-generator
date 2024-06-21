@@ -1,7 +1,6 @@
 import { screen, fireEvent } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import {
-  generateActivity,
   loadVersionedCss,
   setupEventListeners,
 } from "../public/activityGenerator";
